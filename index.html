@@ -219,7 +219,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 85vh;
+            min-height: 70vh;
             text-align: center;
             margin-bottom: 2rem
         }
@@ -325,6 +325,137 @@
             100% {
                 box-shadow: 0 0 20px #c9a959
             }
+        }
+
+        /* ========== YENİ: YEMEK KARTI ========== */
+        .yemek-kart {
+            background: linear-gradient(145deg, #1d1a2b, #130f22);
+            border: 1px solid #c9a95930;
+            border-radius: 50px 16px 50px 16px;
+            padding: 1.8rem 2rem;
+            margin: 2rem auto 3rem;
+            max-width: 750px;
+            box-shadow: 0 30px 40px -20px black, 0 0 0 1px #064C3530, 0 0 30px #c9a95920;
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s ease, box-shadow 0.3s;
+        }
+
+        .yemek-kart:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 40px 50px -20px #000, 0 0 0 1px #c9a959, 0 0 40px #c9a95940;
+        }
+
+        .yemek-badge {
+            display: inline-block;
+            background: #064C35;
+            color: #f7e9c3;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            border: 1px solid #c9a959;
+            box-shadow: 0 0 10px #c9a959;
+        }
+
+        .yemek-ust {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .yemek-ust h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #f5e5b5, #dbb671);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .yemek-aciklama {
+            color: #bfb5a2;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            padding-left: 0.5rem;
+            border-left: 3px solid #c9a959;
+        }
+
+        .thumbnail-container {
+            width: 100%;
+            border-radius: 30px 10px 30px 10px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            border: 2px solid #c9a95930;
+            transition: border 0.2s;
+            background: #00000040;
+        }
+
+        .thumbnail-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .thumbnail-container:hover img {
+            transform: scale(1.05);
+        }
+
+        .yemek-aksiyon {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 1.2rem;
+        }
+
+        .izle-btn {
+            background: linear-gradient(135deg, #c9a959, #b38f4a);
+            border: none;
+            color: #0a0718;
+            font-weight: 800;
+            padding: 0.8rem 2.2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 5px 15px #c9a95970;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            border: 1px solid #efdbaa;
+        }
+
+        .izle-btn:hover {
+            background: linear-gradient(135deg, #dbbd7c, #c9a959);
+            transform: scale(1.05);
+            box-shadow: 0 5px 25px #c9a959;
+            color: #000;
+        }
+
+        .random-btn {
+            background: transparent;
+            border: 1px solid #c9a95970;
+            color: #eeddbb;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            backdrop-filter: blur(4px);
+        }
+
+        .random-btn:hover {
+            background: #c9a95920;
+            border-color: #c9a959;
+            transform: translateY(-2px);
         }
 
         /* sünnet kartı */
@@ -476,10 +607,19 @@
             .sunnet-text {
                 font-size: 2rem
             }
+
+            .yemek-kart {
+                padding: 1.5rem 1rem;
+            }
+
+            .yemek-ust h3 {
+                font-size: 1.6rem;
+            }
         }
 
         /* scroll reveal basit */
         .hero,
+        .yemek-kart,
         .sunnet-kart,
         .tablo-kapsul {
             animation: fadeUp 1s both
@@ -533,7 +673,6 @@
         <a href="#sunnet" id="mSunnet">Günün Sünneti</a>
         <a href="#hakkimda" id="mHak">Hakkında</a>
         <a href="https://heisenberg1098.github.io/Blog-Sitem" target="_blank">Blog</a>
-
     </div>
 
     <div class="container">
@@ -551,6 +690,27 @@
                 </div>
                 <div class="hedef-bilgi" id="hedefGoster"></div>
                 <div class="iftar-anlik-mesaj" id="iftarMesaj"></div>
+            </div>
+
+            <!-- ========== YENİ: YEMEK KARTI ========== -->
+            <div class="yemek-kart" id="yemekKart">
+                <div class="yemek-badge" id="yemekBadge">🌙 GÜNÜN YEMEĞİ</div>
+
+                <div class="yemek-ust">
+                    <h3 id="yemekBaslik">Ramazan Pidesi</h3>
+                </div>
+                <div class="thumbnail-container"></div>
+
+                <div class="thumbnail-container">
+                    <img src="" id="yemekResim" alt="Günün Yemeği">
+                </div>
+                <div class="yemek-aciklama" id="yemekAciklama">Nefis Yemek Tarifleri'nden özel iftar menüsü</div>
+
+                <div class="yemek-aksiyon">
+                    <a href="https://youtube.com" id="izleButon" class="izle-btn" target="_blank"><i class="fab fa-youtube"></i> Tarifi
+                        İzle</a>
+                    <button class="random-btn" id="randomOneri"><i class="fas fa-random"></i> Başka Öneri</button>
+                </div>
             </div>
         </section>
 
@@ -580,13 +740,15 @@
 
         <footer id="hakkimda">
             <div style="font-size:1.3rem; color:#aa9f92">🌙 1447 – 2026 Kayseri</div>
-            <a href="https://heisenberg1098.github.io/Blog-Sitem" style="text-decoration: none;" target="_blank"><div class="imza">M.Enes Yalçın</div></a>
-            
+            <a href="https://heisenberg1098.github.io/Blog-Sitem" style="text-decoration: none;" target="_blank">
+                <div class="imza">M.Enes Yalçın</div>
+            </a>
         </footer>
     </div>
 
     <script>
         (function () {
+            // ---------- MEVCUT İFTAR VERİSİ ----------
             const imsakiyeVerisi = [
                 [1, "19 Şubat Perşembe", "05:56", "07:18", "12:57", "15:57", "18:26", "19:43"],
                 [2, "20 Şubat Cuma", "05:54", "07:16", "12:57", "15:58", "18:27", "19:44"],
@@ -619,7 +781,6 @@
                 [29, "19 Mart Perşembe", "05:15", "06:37", "12:51", "16:15", "18:55", "20:12"]
             ];
 
-            // sünnet listesi 
             const sunnetList = [
                 "Misvak kullanmak", "Selamı yaymak", "Sağ elle yemek", "Erken iftar yapmak", "Hurma ile oruç açmak",
                 "İftar duası yapmak", "Sadaka vermek", "Komşuya ikram", "Tebessüm etmek", "İki rekat şükür namazı",
@@ -629,6 +790,104 @@
                 "Sarımısaklı yemek sonrası ağız temizliği", "Yeni kıyafet giyince dua", "İftarda hurma ile açmak", "Mazerette doğruluk"
             ];
 
+            // ---------- YENİ: RAMAZAN YEMEK LİSTESİ (Nefis Yemek Tarifleri) ----------
+            const ramazanYemekleri = [
+                {
+                    title: "Ramazan Pidesi (Tam Ölçülü)",
+                    description: "Fırından alınmış gibi fosur fosur kabaran, yumuşacık ev yapımı Ramazan pidesi.",
+                    videoUrl: "https://www.youtube.com/watch?v=nd2SqC3KXZc",
+                    thumbnail: "https://i.ytimg.com/vi/nd2SqC3KXZc/maxresdefault.jpg"
+                },
+                {
+                    title: "Lokanta Usulü Mercimek Çorbası",
+                    description: "Tam kıvamında, süzme lezzetinde iftar sofralarının vazgeçilmez başlangıcı.",
+                    videoUrl: "https://www.youtube.com/watch?v=9kmOW_eqdq8",
+                    thumbnail: "https://i.ytimg.com/vi/9kmOW_eqdq8/maxresdefault.jpg"
+                },
+                {
+                    title: "Sütlü Hafif Güllaç Tatlısı",
+                    description: "Ramazan'ın sultanı, tam ölçülü ve gül suyu aromasız (tercihe bağlı) hafif tarif.",
+                    videoUrl: "https://www.youtube.com/watch?v=MTuohbe_7x8",
+                    thumbnail: "https://i.ytimg.com/vi/MTuohbe_7x8/maxresdefault.jpg"
+                },
+                {
+                    title: "Fırında Sebzeli Tavuk Yemeği",
+                    description: "Lokum gibi pişen tavuklar ve sebzelerle hazırlanan pratik bir ana yemek.",
+                    videoUrl: "https://www.youtube.com/watch?v=84C7b-OwkHc",
+                    thumbnail: "https://i.ytimg.com/vi/84C7b-OwkHc/maxresdefault.jpg"
+                },
+                {
+                    title: "Peynirli Nefis Tepsi Böreği",
+                    description: "El açması tadında, dışı çıtır içi yumuşacık en sevilen tepsi böreği.",
+                    videoUrl: "https://www.youtube.com/watch?v=jKgkzDpJ_dI",
+                    thumbnail: "https://i.ytimg.com/vi/jKgkzDpJ_dI/maxresdefault.jpg"
+                },
+                {
+                    title: "Hurmacık Tatlısı (Şerbetli)",
+                    description: "Ağızda dağılan kıvamıyla şerbetli tatlı sevenlerin favorisi hurmacık.",
+                    videoUrl: "https://www.youtube.com/watch?v=KjY7p7tQGqM",
+                    thumbnail: "https://i.ytimg.com/vi/KjY7p7tQGqM/maxresdefault.jpg"
+                },
+                {
+                    title: "Tam Kıvamlı Ezogelin Çorbası",
+                    description: "Bol vitaminli, lokanta usulü ve çok doyurucu bir şifa kaynağı.",
+                    videoUrl: "https://www.youtube.com/watch?v=K0BU491cdDM",
+                    thumbnail: "https://i.ytimg.com/vi/K0BU491cdDM/maxresdefault.jpg"
+                },
+                {
+                    title: "Çok Kolay İçli Köfte Tarifi",
+                    description: "Dağılmayan, çatlamayan ve herkesin yapabileceği en pratik içli köfte.",
+                    videoUrl: "https://www.youtube.com/watch?v=wWjrSFQTGsQ",
+                    thumbnail: "https://i.ytimg.com/vi/wWjrSFQTGsQ/maxresdefault.jpg"
+                },
+                {
+                    title: "Zeytinyağlı Yaprak Sarması",
+                    description: "İncecik sarılan, tam kıvamında harcıyla klasik bir lezzet şöleni.",
+                    videoUrl: "https://www.youtube.com/watch?v=ux1XC_L1qvI",
+                    thumbnail: "https://i.ytimg.com/vi/ux1XC_L1qvI/maxresdefault.jpg"
+                },
+                {
+                    title: "Ev Yapımı Çıtır Künefe",
+                    description: "Dışarıda yediklerinizi aratmayacak, bol peynirli sıcak künefe tarifi.",
+                    videoUrl: "https://www.youtube.com/watch?v=HckSh9-xGsE",
+                    thumbnail: "https://i.ytimg.com/vi/HckSh9-xGsE/maxresdefault.jpg"
+                },
+                {
+                    title: "Pilav Üstü Et Kavurma",
+                    description: "İftar sofrasına çok yakışan, yumuşacık pişmiş et ve tane tane pilav.",
+                    videoUrl: "https://www.youtube.com/watch?v=aDXps2lUVEQ",
+                    thumbnail: "https://i.ytimg.com/vi/aDXps2lUVEQ/maxresdefault.jpg"
+                },
+                {
+                    title: "Pratik Sahur Böreği (Tavada)",
+                    description: "Sahurda vakit harcamadan hazırlayabileceğiniz, çok pratik ve tok tutan börek.",
+                    videoUrl: "https://www.youtube.com/watch?v=P_B9fklVZ7Q",
+                    thumbnail: "https://i.ytimg.com/vi/P_B9fklVZ7Q/maxresdefault.jpg"
+                }
+            ];
+
+            // ---------- YEMEK SEÇİCİ (deterministik: günün gününe göre) ----------
+            function gunlukYemegiSec() {
+                const gun = new Date().getDate(); // 1-31 arası
+                const index = gun % ramazanYemekleri.length;
+                return ramazanYemekleri[index];
+            }
+
+            // ---------- YEMEK KARTINI GÜNCELLE ----------
+            function yemekKartiniGuncelle(yemek) {
+                document.getElementById('yemekBaslik').innerText = yemek.title;
+                document.getElementById('yemekAciklama').innerText = yemek.description;
+                document.getElementById('yemekResim').src = yemek.thumbnail;
+                document.getElementById('izleButon').href = yemek.videoUrl;
+            }
+
+            // ---------- RASTGELE BUTONU ----------
+            function rastgeleYemekSec() {
+                const rast = Math.floor(Math.random() * ramazanYemekleri.length);
+                return ramazanYemekleri[rast];
+            }
+
+            // ---------- MEVCUT İFTAR FONKSİYONLARI ----------
             let bugunIndex = 0, hedefIndex = 0;
             const saatSpan = document.getElementById('saat');
             const dakikaSpan = document.getElementById('dakika');
@@ -640,15 +899,15 @@
             function tarihAralikBugun() {
                 const now = new Date();
                 for (let i = 0; i < imsakiyeVerisi.length; i++) {
-                    let tarihStr = imsakiyeVerisi[i][1]; // "19 Şubat Perşembe"
-                    let ayGun = tarihStr.split(' ')[0] + ' ' + tarihStr.split(' ')[1]; // "19 Şubat"
+                    let tarihStr = imsakiyeVerisi[i][1];
+                    let ayGun = tarihStr.split(' ')[0] + ' ' + tarihStr.split(' ')[1];
                     let ayAd = ayGun.split(' ')[1];
                     let gun = parseInt(ayGun.split(' ')[0]);
                     const aylar = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
                     let ay = aylar.indexOf(ayAd);
                     if (now.getFullYear() === 2026 && now.getMonth() === ay && now.getDate() === gun) return i;
                 }
-                return 0; // ramazan dışı 0 kabul finito oluyor
+                return 0;
             }
 
             function tabloyuCiz(highlightIndex) {
@@ -663,7 +922,6 @@
                     let ayAd = ayGun.split(' ')[1];
                     const aylar = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
                     let ay = aylar.indexOf(ayAd);
-                    let hucreTarih = new Date(2026, ay, gun, 23, 59); // gün sonu karşılaştır
                     let gecmis = (now.getFullYear() > 2026 || (now.getFullYear() === 2026 && (now.getMonth() > ay || (now.getMonth() === ay && now.getDate() > gun)))) ? true : false;
                     let bugunMu = (i === highlightIndex);
                     let trClass = '';
@@ -675,7 +933,7 @@
             }
 
             function vaktiHesapla(gunIdx) {
-                let iftarStr = imsakiyeVerisi[gunIdx][6]; // "18:26"
+                let iftarStr = imsakiyeVerisi[gunIdx][6];
                 let tarihStr = imsakiyeVerisi[gunIdx][1];
                 let ayGun = tarihStr.split(' ')[0] + ' ' + tarihStr.split(' ')[1];
                 let gun = parseInt(ayGun.split(' ')[0]);
@@ -692,7 +950,7 @@
                 let bugunIftar = vaktiHesapla(bugun);
                 if (simdi < bugunIftar) return bugun;
                 else if (bugun + 1 < imsakiyeVerisi.length) return bugun + 1;
-                else return bugun; // son gün geçmişse son gün
+                else return bugun;
             }
 
             function geriSayimiGuncelle() {
@@ -711,22 +969,19 @@
                 saniyeSpan.innerText = saniye.toString().padStart(2, '0');
                 hedefGoster.innerText = `İftar: ${imsakiyeVerisi[hedefIndex][1]} - ${imsakiyeVerisi[hedefIndex][6]}`;
 
-                // iftar mesajı
                 if (Math.abs(kalanMs) < 5000 && kalanMs <= 0) {
                     iftarMesaj.innerHTML = '<div class="mesaj-aktif">🌙 Hayırlı İftarlar 🌙</div>';
                 } else iftarMesaj.innerHTML = '';
 
-                // bugünün sünneti 
                 sunnetDegeri.innerText = sunnetList[bugunIndex] || "Misvak kullanmak";
 
-                // tablo yenileme (gün değiştiyse)
                 if (window._onceIndex !== bugunIndex) {
                     tabloyuCiz(bugunIndex);
                     window._onceIndex = bugunIndex;
                 }
             }
 
-            // ilk yükleme
+            // ---------- BAŞLANGIÇ ----------
             window._onceIndex = -1;
             bugunIndex = tarihAralikBugun();
             tabloyuCiz(bugunIndex);
@@ -740,7 +995,7 @@
                 else nav.classList.remove('scrolled');
             });
 
-            // hamburger hasbhxa
+            // hamburger
             const hamburger = document.getElementById('hamburgerBtn');
             const mobileMenu = document.getElementById('mobileMenu');
             hamburger.addEventListener('click', () => {
@@ -752,7 +1007,6 @@
                 });
             });
 
-            // smooth scroll tıklamalar
             document.querySelectorAll('a[href^="#"]').forEach(link => {
                 link.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -760,8 +1014,19 @@
                     if (target) target.scrollIntoView({ behavior: 'smooth' });
                 });
             });
+
+            // ---------- YEMEK KARTINI AYAĞA KALDIR ----------
+            const gunlukYemek = gunlukYemegiSec();
+            yemekKartiniGuncelle(gunlukYemek);
+
+            document.getElementById('randomOneri').addEventListener('click', function () {
+                const rastYemek = rastgeleYemekSec();
+                yemekKartiniGuncelle(rastYemek);
+            });
         })();
     </script>
+    <!-- Font Awesome ikonlar (youtube, random) için -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </body>
 
 </html>
