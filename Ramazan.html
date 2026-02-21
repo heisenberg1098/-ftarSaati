@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Kayseri İftar · 2026</title>
+    <link rel="icon" href="hilal.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif
+        }
+
+        body {
+            background: #0a0718;
+            min-height: 100vh;
+            color: #f0e9f0;
+            position: relative;
+            overflow-x: hidden
+        }
+
+        /* arkaplan gradient + hareket */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 40%, #1e1638 0%, #181029 35%, #0e0a1a 80%);
+            animation: dondur 40s ease-in-out infinite;
+            z-index: -2
+        }
+
+        @keyframes dondur {
+            0% {
+                transform: rotate(0deg) scale(1)
+            }
+
+            50% {
+                transform: rotate(2deg) scale(1.02)
+            }
+
+            100% {
+                transform: rotate(0deg) scale(1)
+            }
+        }
+
+        /* yıldız / hilal SVG motifleri */
+        .arkaplan-svg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.25
+        }
+
+        .arkaplan-svg svg {
+            width: 100%;
+            height: 100%
+        }
+
+        /* yıldız kaymaları */
+        .yildiz-kaymasi {
+            position: fixed;
+            top: 10%;
+            left: -10%;
+            width: 240px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #c9a959, #efd6a0, transparent);
+            border-radius: 100%;
+            filter: blur(3px);
+            opacity: 0.3;
+            animation: kay 18s linear infinite;
+            z-index: 0
+        }
+
+        .yildiz-kaymasi.iki {
+            top: 25%;
+            animation-delay: 7s;
+            width: 160px;
+            opacity: 0.2
+        }
+
+        .yildiz-kaymasi.uc {
+            top: 70%;
+            animation-delay: 13s;
+            width: 300px;
+            opacity: 0.25
+        }
+
+        @keyframes kay {
+            0% {
+                left: -10%;
+                opacity: 0.4
+            }
+
+            20% {
+                opacity: 1
+            }
+
+            80% {
+                opacity: 0.6
+            }
+
+            100% {
+                left: 120%;
+                opacity: 0
+            }
+        }
+
+        /* navbar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            transition: all 0.3s;
+            backdrop-filter: blur(0);
+            background: transparent
+        }
+
+        .navbar.scrolled {
+            background: rgba(24, 16, 41, 0.7);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(201, 169, 89, 0.25);
+            box-shadow: 0 10px 30px -10px #0a051a
+        }
+
+        .logo img {
+            height: 42px;
+            width: auto;
+            display: block;
+            filter: drop-shadow(0 0 5px #c9a959)
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center
+        }
+
+        .nav-links a {
+            color: #f0e6d5;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid transparent;
+            transition: 0.2s;
+            padding-bottom: 4px
+        }
+
+        .nav-links a:hover {
+            border-bottom-color: #c9a959;
+            color: #eeddbb
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 5px
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background: #eeddbb;
+            border-radius: 3px;
+            transition: 0.2s
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: rgba(24, 16, 41, 0.9);
+            backdrop-filter: blur(18px);
+            position: absolute;
+            top: 75px;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #c9a95930;
+            z-index: 99
+        }
+
+        .mobile-menu a {
+            color: #f0e6d5;
+            text-decoration: none;
+            padding: 1rem 0;
+            font-size: 1.4rem;
+            border-bottom: 1px solid #30284a
+        }
+
+        /* container */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 1.5rem 2rem;
+            position: relative;
+            z-index: 5
+        }
+
+        /* hero countdown */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 85vh;
+            text-align: center;
+            margin-bottom: 2rem
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 8vw, 5rem);
+            font-weight: 600;
+            background: linear-gradient(135deg, #eeddbb, #c9a959);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px #c9a95960
+        }
+
+        .hero .alt-baslik {
+            font-size: 1.5rem;
+            color: #b7aa99;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px dashed #064C35;
+            padding-bottom: 0.5rem;
+            display: inline-block
+        }
+
+        .sayac-blok {
+            background: rgba(10, 7, 28, 0.5);
+            backdrop-filter: blur(14px);
+            border: 1.5px solid #c9a95930;
+            border-radius: 70px 20px 70px 20px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 30px 50px -20px #000, 0 0 0 1px #064C3550, 0 0 50px #c9a95920;
+            width: fit-content;
+            margin: 0 auto
+        }
+
+        .sayac-dijital {
+            display: flex;
+            gap: clamp(1.2rem, 5vw, 4rem);
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        .sayac-birim {
+            display: flex;
+            flex-direction: column
+        }
+
+        .sayac-birim .rakam {
+            font-size: clamp(3.5rem, 12vw, 7rem);
+            font-weight: 700;
+            background: linear-gradient(145deg, #f8e4bc, #c9a959);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            text-shadow: 0 0 45px #c9a959, 0 0 90px #064C35
+        }
+
+        .sayac-birim .birim-ad {
+            font-size: 1.3rem;
+            color: #9e9488;
+            letter-spacing: 3px;
+            text-transform: uppercase
+        }
+
+        .hedef-bilgi {
+            margin-top: 1.8rem;
+            font-size: 1.3rem;
+            background: #064C3540;
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            color: #e7d7b0;
+            border: 1px solid #c9a95940;
+            display: inline-block
+        }
+
+        .iftar-anlik-mesaj {
+            min-height: 75px;
+            margin-top: 1rem
+        }
+
+        .mesaj-aktif {
+            background: #064C35cc;
+            padding: 1rem 3rem;
+            border-radius: 60px;
+            font-size: 2rem;
+            color: #f5e5c8;
+            border: 1px solid #c9a959;
+            box-shadow: 0 0 50px #c9a959;
+            animation: nefes 1.5s infinite
+        }
+
+        @keyframes nefes {
+            0% {
+                box-shadow: 0 0 20px #c9a959
+            }
+
+            50% {
+                box-shadow: 0 0 60px #c9a959, 0 0 100px #064C35
+            }
+
+            100% {
+                box-shadow: 0 0 20px #c9a959
+            }
+        }
+
+        /* sünnet kartı */
+        .sunnet-kart {
+            background: linear-gradient(130deg, #1d1535, #181029);
+            border-radius: 50px 10px 50px 10px;
+            padding: 2.5rem 3rem;
+            margin: 3rem auto;
+            max-width: 850px;
+            border-left: 6px solid #c9a959;
+            box-shadow: 0 20px 30px -10px #000, 0 0 0 1px #064C35;
+            transition: transform 0.2s ease
+        }
+
+        .sunnet-kart:hover {
+            transform: scale(1.02);
+            border-left-color: #eeddbb;
+            box-shadow: 0 0 35px #064C3580
+        }
+
+        .sunnet-label {
+            color: #c9a959;
+            font-size: 1.4rem;
+            letter-spacing: 5px;
+            margin-bottom: 0.75rem
+        }
+
+        .sunnet-text {
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 600;
+            color: #fcf3e0;
+            line-height: 1.3
+        }
+
+        .sunnet-dip {
+            font-size: 1rem;
+            color: #8f867a;
+            margin-top: 0.8rem;
+            font-style: italic
+        }
+
+        /* imsakiye tablo */
+        .tablo-kapsul {
+            background: rgba(24, 16, 41, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 45px 15px 45px 15px;
+            padding: 2rem 0.5rem;
+            border: 1px solid #c9a95930;
+            margin: 2rem 0;
+            overflow-x: auto
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+            font-size: 1rem
+        }
+
+        th {
+            background: #064C35;
+            color: #eeddbb;
+            font-weight: 600;
+            padding: 1.2rem 0.5rem;
+            font-size: 1.2rem;
+            border-radius: 25px 25px 0 0
+        }
+
+        td {
+            padding: 1rem 0.4rem;
+            border-bottom: 1px solid #30284a;
+            text-align: center;
+            color: #ddd2c0
+        }
+
+        tr {
+            background: #1f1833b0;
+            transition: 0.1s
+        }
+
+        tr:hover td {
+            background: #30254d !important
+        }
+
+        /* geçmiş gün çizgisi */
+        .gecmis-gun td {
+            text-decoration: line-through 1.5px #9f8b70;
+            color: #9b8e7f
+        }
+
+        .bugun-glow {
+            background: #064C3590 !important;
+            box-shadow: inset 0 0 25px #c9a95930;
+            border-left: 4px solid #c9a959;
+            border-right: 4px solid #c9a959;
+            font-weight: 600
+        }
+
+        .bugun-glow td {
+            color: #fcf0dd
+        }
+
+        /* footer */
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem 0 0.5rem;
+            border-top: 1px dashed #2e2650
+        }
+
+        .imza {
+            font-family: 'Pacifico', 'Brush Script MT', cursive;
+            font-size: 2rem;
+            color: #c9a959;
+            text-shadow: 0 0 10px #064C35;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-top: 1rem
+        }
+
+        /* mobil */
+        @media(max-width:800px) {
+            .nav-links {
+                display: none
+            }
+
+            .hamburger {
+                display: flex
+            }
+
+            .mobile-menu.acik {
+                display: flex
+            }
+
+            .navbar {
+                padding: 1rem 5%
+            }
+        }
+
+        @media(max-width:550px) {
+            .sayac-blok {
+                padding: 2rem 1rem
+            }
+
+            .sunnet-kart {
+                padding: 1.5rem
+            }
+
+            .sunnet-text {
+                font-size: 2rem
+            }
+        }
+
+        /* scroll reveal basit */
+        .hero,
+        .sunnet-kart,
+        .tablo-kapsul {
+            animation: fadeUp 1s both
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px)
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="arkaplan-svg">
+        <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+            <path
+                d="M190,120 Q240,40 320,70 Q390,20 470,80 Q540,30 610,90 Q670,60 710,140 Q760,130 740,210 Q800,260 710,310 Q760,390 650,400 Q570,460 480,400 Q400,470 300,420 Q210,480 140,410 Q70,430 50,340 Q10,270 80,200 Q40,120 130,120 Q150,90 190,120"
+                fill="none" stroke="#c9a959" stroke-width="2.2" opacity="0.25" />
+            <circle cx="520" cy="130" r="22" fill="none" stroke="#c9a959" stroke-width="1.8" opacity="0.35" />
+            <circle cx="520" cy="130" r="10" fill="#c9a95920" opacity="0.4" />
+            <circle cx="300" cy="320" r="28" fill="none" stroke="#c9a959" stroke-width="2" opacity="0.25" />
+            <circle cx="300" cy="320" r="13" fill="#c9a95920" opacity="0.3" />
+            <circle cx="660" cy="430" r="20" fill="none" stroke="#c9a959" stroke-width="2" opacity="0.2" />
+        </svg>
+    </div>
+    <div class="yildiz-kaymasi"></div>
+    <div class="yildiz-kaymasi iki"></div>
+    <div class="yildiz-kaymasi uc"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="logo" height="3em"><img src="ME.png" alt="ME"></div>
+        <div class="nav-links">
+            <a href="#geriSayim">Geri Sayım</a>
+            <a href="#imsakiye">İmsakiye</a>
+            <a href="#sunnet">Günün Sünneti</a>
+            <a href="#hakkimda">Hakkında</a>
+            <a href="https://heisenberg1098.github.io/Blog-Sitem" target="_blank" class="blog-link">Blog</a>
+        </div>
+        <div class="hamburger" id="hamburgerBtn"><span></span><span></span><span></span></div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#geriSayim" id="mGeri">Geri Sayım</a>
+        <a href="#imsakiye" id="mImsak">İmsakiye</a>
+        <a href="#sunnet" id="mSunnet">Günün Sünneti</a>
+        <a href="#hakkimda" id="mHak">Hakkında</a>
+        <a href="https://heisenberg1098.github.io/Blog-Sitem" target="_blank">Blog</a>
+
+    </div>
+
+    <div class="container">
+        <section id="geriSayim" class="hero">
+            <h1>KAYSERİ İFTAR VAKTİ 2026</h1>
+            <div class="alt-baslik">Ramazan İmsakiyesi</div>
+            <div class="sayac-blok">
+                <div class="sayac-dijital" id="sayac">
+                    <div class="sayac-birim"><span class="rakam" id="saat">00</span><span class="birim-ad">saat</span>
+                    </div>
+                    <div class="sayac-birim"><span class="rakam" id="dakika">00</span><span
+                            class="birim-ad">dakika</span></div>
+                    <div class="sayac-birim"><span class="rakam" id="saniye">00</span><span
+                            class="birim-ad">saniye</span></div>
+                </div>
+                <div class="hedef-bilgi" id="hedefGoster"></div>
+                <div class="iftar-anlik-mesaj" id="iftarMesaj"></div>
+            </div>
+        </section>
+
+        <section id="sunnet" class="sunnet-kart">
+            <div class="sunnet-label">🕌 GÜNÜN SÜNNETİ</div>
+            <div class="sunnet-text" id="sunnetDegeri">Misvak kullanmak</div>
+            <div class="sunnet-dip">– Peygamberimizin ﷺ mübarek yolu –</div>
+        </section>
+
+        <section id="imsakiye" class="tablo-kapsul">
+            <table id="imsakiyeTablosu">
+                <thead>
+                    <tr>
+                        <th>Gün</th>
+                        <th>Tarih</th>
+                        <th>İmsak</th>
+                        <th>Güneş</th>
+                        <th>Öğle</th>
+                        <th>İkindi</th>
+                        <th>İftar</th>
+                        <th>Yatsı</th>
+                    </tr>
+                </thead>
+                <tbody id="tabloGovde"></tbody>
+            </table>
+        </section>
+
+        <footer id="hakkimda">
+            <div style="font-size:1.3rem; color:#aa9f92">🌙 1447 – 2026 Kayseri</div>
+            <a href="https://heisenberg1098.github.io/Blog-Sitem" style="text-decoration: none;" target="_blank"><div class="imza">M.Enes Yalçın</div></a>
+            
+        </footer>
+    </div>
+
+    <script>
+        (function () {
+            const imsakiyeVerisi = [
+                [1, "19 Şubat Perşembe", "05:56", "07:18", "12:57", "15:57", "18:26", "19:43"],
+                [2, "20 Şubat Cuma", "05:54", "07:16", "12:57", "15:58", "18:27", "19:44"],
+                [3, "21 Şubat Cumartesi", "05:53", "07:15", "12:57", "15:59", "18:28", "19:45"],
+                [4, "22 Şubat Pazar", "05:52", "07:14", "12:57", "16:00", "18:30", "19:46"],
+                [5, "23 Şubat Pazartesi", "05:51", "07:12", "12:56", "16:00", "18:31", "19:47"],
+                [6, "24 Şubat Salı", "05:49", "07:11", "12:56", "16:01", "18:32", "19:48"],
+                [7, "25 Şubat Çarşamba", "05:48", "07:10", "12:56", "16:02", "18:33", "19:49"],
+                [8, "26 Şubat Perşembe", "05:47", "07:08", "12:56", "16:03", "18:34", "19:50"],
+                [9, "27 Şubat Cuma", "05:45", "07:07", "12:56", "16:03", "18:35", "19:51"],
+                [10, "28 Şubat Cumartesi", "05:44", "07:05", "12:56", "16:04", "18:36", "19:52"],
+                [11, "1 Mart Pazar", "05:43", "07:04", "12:55", "16:05", "18:37", "19:53"],
+                [12, "2 Mart Pazartesi", "05:41", "07:02", "12:55", "16:05", "18:38", "19:54"],
+                [13, "3 Mart Salı", "05:40", "07:01", "12:55", "16:06", "18:39", "19:55"],
+                [14, "4 Mart Çarşamba", "05:38", "07:00", "12:55", "16:07", "18:40", "19:56"],
+                [15, "5 Mart Perşembe", "05:37", "06:58", "12:55", "16:07", "18:41", "19:57"],
+                [16, "6 Mart Cuma", "05:35", "06:57", "12:54", "16:08", "18:42", "19:58"],
+                [17, "7 Mart Cumartesi", "05:34", "06:55", "12:54", "16:09", "18:43", "19:59"],
+                [18, "8 Mart Pazar", "05:32", "06:54", "12:54", "16:09", "18:44", "20:00"],
+                [19, "9 Mart Pazartesi", "05:31", "06:52", "12:54", "16:10", "18:45", "20:01"],
+                [20, "10 Mart Salı", "05:29", "06:51", "12:53", "16:10", "18:46", "20:02"],
+                [21, "11 Mart Çarşamba", "05:28", "06:49", "12:53", "16:11", "18:47", "20:03"],
+                [22, "12 Mart Perşembe", "05:26", "06:48", "12:53", "16:11", "18:48", "20:04"],
+                [23, "13 Mart Cuma", "05:25", "06:46", "12:53", "16:12", "18:49", "20:06"],
+                [24, "14 Mart Cumartesi", "05:23", "06:45", "12:52", "16:12", "18:50", "20:07"],
+                [25, "15 Mart Pazar", "05:21", "06:43", "12:52", "16:13", "18:51", "20:08"],
+                [26, "16 Mart Pazartesi", "05:20", "06:41", "12:52", "16:14", "18:52", "20:09"],
+                [27, "17 Mart Salı", "05:18", "06:40", "12:52", "16:14", "18:53", "20:10"],
+                [28, "18 Mart Çarşamba", "05:17", "06:38", "12:51", "16:14", "18:54", "20:11"],
+                [29, "19 Mart Perşembe", "05:15", "06:37", "12:51", "16:15", "18:55", "20:12"]
+            ];
+
+            // sünnet listesi 
+            const sunnetList = [
+                "Misvak kullanmak", "Selamı yaymak", "Sağ elle yemek", "Erken iftar yapmak", "Hurma ile oruç açmak",
+                "İftar duası yapmak", "Sadaka vermek", "Komşuya ikram", "Tebessüm etmek", "İki rekat şükür namazı",
+                "Yemeğe besmele", "Su üç yudumda", "Uyurken sağ taraf", "Eve selamla girmek", "Ayakkabı sağdan giymek",
+                "Cuma gusletmek", "Güzel koku sürünmek", "Borcu vaktinde ödemek", "Hasta ziyareti", "Kabirlere selam",
+                "İstihare namazı", "Tahnik yapmak", "Diş temizliği (misvak)", "Yolculuğa dua ile çıkmak", "Kulak temizliği",
+                "Sarımısaklı yemek sonrası ağız temizliği", "Yeni kıyafet giyince dua", "İftarda hurma ile açmak", "Mazerette doğruluk"
+            ];
+
+            let bugunIndex = 0, hedefIndex = 0;
+            const saatSpan = document.getElementById('saat');
+            const dakikaSpan = document.getElementById('dakika');
+            const saniyeSpan = document.getElementById('saniye');
+            const hedefGoster = document.getElementById('hedefGoster');
+            const iftarMesaj = document.getElementById('iftarMesaj');
+            const sunnetDegeri = document.getElementById('sunnetDegeri');
+
+            function tarihAralikBugun() {
+                const now = new Date();
+                for (let i = 0; i < imsakiyeVerisi.length; i++) {
+                    let tarihStr = imsakiyeVerisi[i][1]; // "19 Şubat Perşembe"
+                    let ayGun = tarihStr.split(' ')[0] + ' ' + tarihStr.split(' ')[1]; // "19 Şubat"
+                    let ayAd = ayGun.split(' ')[1];
+                    let gun = parseInt(ayGun.split(' ')[0]);
+                    const aylar = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+                    let ay = aylar.indexOf(ayAd);
+                    if (now.getFullYear() === 2026 && now.getMonth() === ay && now.getDate() === gun) return i;
+                }
+                return 0; // ramazan dışı 0 kabul finito oluyor
+            }
+
+            function tabloyuCiz(highlightIndex) {
+                let tbody = document.getElementById('tabloGovde');
+                let html = '';
+                let now = new Date();
+                for (let i = 0; i < imsakiyeVerisi.length; i++) {
+                    let row = imsakiyeVerisi[i];
+                    let tarihStr = row[1];
+                    let ayGun = tarihStr.split(' ')[0] + ' ' + tarihStr.split(' ')[1];
+                    let gun = parseInt(ayGun.split(' ')[0]);
+                    let ayAd = ayGun.split(' ')[1];
+                    const aylar = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+                    let ay = aylar.indexOf(ayAd);
+                    let hucreTarih = new Date(2026, ay, gun, 23, 59); // gün sonu karşılaştır
+                    let gecmis = (now.getFullYear() > 2026 || (now.getFullYear() === 2026 && (now.getMonth() > ay || (now.getMonth() === ay && now.getDate() > gun)))) ? true : false;
+                    let bugunMu = (i === highlightIndex);
+                    let trClass = '';
+                    if (bugunMu) trClass = 'bugun-glow';
+                    else if (gecmis) trClass = 'gecmis-gun';
+                    html += `<tr class="${trClass}"><td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td><td>${row[4]}</td><td>${row[5]}</td><td>${row[6]}</td><td>${row[7]}</td></tr>`;
+                }
+                tbody.innerHTML = html;
+            }
+
+            function vaktiHesapla(gunIdx) {
+                let iftarStr = imsakiyeVerisi[gunIdx][6]; // "18:26"
+                let tarihStr = imsakiyeVerisi[gunIdx][1];
+                let ayGun = tarihStr.split(' ')[0] + ' ' + tarihStr.split(' ')[1];
+                let gun = parseInt(ayGun.split(' ')[0]);
+                let ayAd = ayGun.split(' ')[1];
+                const aylar = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+                let ay = aylar.indexOf(ayAd);
+                let saatDk = iftarStr.split(':');
+                return new Date(2026, ay, gun, parseInt(saatDk[0]), parseInt(saatDk[1]), 0);
+            }
+
+            function hedefIftarBul() {
+                let bugun = tarihAralikBugun();
+                let simdi = new Date();
+                let bugunIftar = vaktiHesapla(bugun);
+                if (simdi < bugunIftar) return bugun;
+                else if (bugun + 1 < imsakiyeVerisi.length) return bugun + 1;
+                else return bugun; // son gün geçmişse son gün
+            }
+
+            function geriSayimiGuncelle() {
+                hedefIndex = hedefIftarBul();
+                bugunIndex = tarihAralikBugun();
+                let hedefZaman = vaktiHesapla(hedefIndex);
+                let simdi = new Date();
+                let kalanMs = hedefZaman - simdi;
+                if (kalanMs < 0) kalanMs = 0;
+                let saniye = Math.floor(kalanMs / 1000);
+                let saat = Math.floor(saniye / 3600);
+                let dakika = Math.floor((saniye % 3600) / 60);
+                saniye = saniye % 60;
+                saatSpan.innerText = saat.toString().padStart(2, '0');
+                dakikaSpan.innerText = dakika.toString().padStart(2, '0');
+                saniyeSpan.innerText = saniye.toString().padStart(2, '0');
+                hedefGoster.innerText = `İftar: ${imsakiyeVerisi[hedefIndex][1]} - ${imsakiyeVerisi[hedefIndex][6]}`;
+
+                // iftar mesajı
+                if (Math.abs(kalanMs) < 5000 && kalanMs <= 0) {
+                    iftarMesaj.innerHTML = '<div class="mesaj-aktif">🌙 Hayırlı İftarlar 🌙</div>';
+                } else iftarMesaj.innerHTML = '';
+
+                // bugünün sünneti 
+                sunnetDegeri.innerText = sunnetList[bugunIndex] || "Misvak kullanmak";
+
+                // tablo yenileme (gün değiştiyse)
+                if (window._onceIndex !== bugunIndex) {
+                    tabloyuCiz(bugunIndex);
+                    window._onceIndex = bugunIndex;
+                }
+            }
+
+            // ilk yükleme
+            window._onceIndex = -1;
+            bugunIndex = tarihAralikBugun();
+            tabloyuCiz(bugunIndex);
+            geriSayimiGuncelle();
+            setInterval(geriSayimiGuncelle, 1000);
+
+            // navbar scroll
+            window.addEventListener('scroll', () => {
+                const nav = document.getElementById('navbar');
+                if (window.scrollY > 20) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+            });
+
+            // hamburger hasbhxa
+            const hamburger = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            hamburger.addEventListener('click', () => {
+                mobileMenu.classList.toggle('acik');
+            });
+            document.querySelectorAll('.mobile-menu a').forEach(a => {
+                a.addEventListener('click', (e) => {
+                    mobileMenu.classList.remove('acik');
+                });
+            });
+
+            // smooth scroll tıklamalar
+            document.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    let target = document.querySelector(this.getAttribute('href'));
+                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+        })();
+    </script>
+</body>
+
+</html>
