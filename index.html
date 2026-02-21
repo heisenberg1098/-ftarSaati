@@ -707,7 +707,8 @@
                 <div class="yemek-aciklama" id="yemekAciklama">Nefis Yemek Tarifleri'nden özel iftar menüsü</div>
 
                 <div class="yemek-aksiyon">
-                    <a href="https://youtube.com" id="izleButon" class="izle-btn" target="_blank"><i class="fab fa-youtube"></i> Tarifi
+                    <a href="https://youtube.com" id="izleButon" class="izle-btn" target="_blank"><i
+                            class="fab fa-youtube"></i> Tarifi
                         İzle</a>
                     <button class="random-btn" id="randomOneri"><i class="fas fa-random"></i> Başka Öneri</button>
                 </div>
@@ -1024,6 +1025,51 @@
                 yemekKartiniGuncelle(rastYemek);
             });
         })();
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, updateDoc, increment, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Senin paylaştığın config bilgileri
+        const firebaseConfig = {
+            apiKey: "AIzaSyBhTD31NWAq6DlnUQPwRcC4Q_-l-pNi1xs",
+            authDomain: "okul-37a9d.firebaseapp.com",
+            projectId: "okul-37a9d",
+            storageBucket: "okul-37a9d.firebasestorage.app",
+            messagingSenderId: "241414867800",
+            appId: "1:241414867800:web:d32c7c7e88617e703e732d"
+        };
+
+        // Firebase başlatma
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Ziyaret sayısını artırma fonksiyonu
+        async function ziyaretciSayisiniArtir() {
+            // Resimdeki "websiteler" koleksiyonu ve ilgili belge ID'si
+            const siteRef = doc(db, "websiteler", "EeoZPeovtaX379RERCR6");
+
+            try {
+                const docSnap = await getDoc(siteRef);
+
+                if (docSnap.exists()) {
+                    // Eğer belge varsa 'ziyaretSayisi' alanını 1 artırır
+                    await updateDoc(siteRef, {
+                        ziyaretSayisi: increment(1)
+                    });
+                } else {
+                    // Eğer belge yoksa (ilk seferde) yeni oluşturur
+                    await setDoc(siteRef, {
+                        isim: "Ramazan - İftar Saati",
+                        ziyaretSayisi: 1
+                    });
+                }
+                console.log("Ziyaret kaydedildi.");
+            } catch (error) {
+                console.error("Hata oluştu: ", error);
+            }
+        }
+
+        // Sayfa yüklendiğinde çalıştır
+        window.addEventListener('load', ziyaretciSayisiniArtir);
     </script>
     <!-- Font Awesome ikonlar (youtube, random) için -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
